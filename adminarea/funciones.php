@@ -3,10 +3,13 @@ include_once('conexion.php');
 function idtemp($idserie, $numtemp){
 $quetemp="SELECT * FROM `temporada` WHERE `numtemp` = ".$numtemp." AND `Series_idSeries` = ".$idserie;
 $mantemp=mysql_query($quetemp);
-$renglon=mysql_fetch_row($mantemp);
+if(mysql_num_rows($mantemp)>0){
+  $renglon=mysql_fetch_row($mantemp);
 $idtemp=$renglon[0];
 //echo($quetemp);
 return($idtemp);
+}
+return(0);
 }
 function idepi($idserie, $idtemp, $titulo){
 	$queepi="SELECT * FROM `episodios` WHERE `tituloepi` = '".$titulo."' AND `Temporada_idTemporada` = ".$idtemp." AND `Temporada_Series_idSeries` = ".$idserie;
@@ -56,5 +59,36 @@ function numerotemp($idtemp){
 	$temporada=mysql_fetch_row($mantmp); 
 	return($temporada[4]);
 }
+function idseriebynombreserie($nombreserie){
+  $quetemp="SELECT `idseries` FROM `series` WHERE `nombre` = '".$nombreserie."'";
+  $mantemp=mysql_query($quetemp);
+  if(mysql_num_rows($mantemp)>0){
+    $lineas=mysql_fetch_row($mantemp);
+    return($lineas[0]);
+  }
+  
+  return(0);
+ 
+}
+function insertaserie($nombre, $anio){
+  $queinserie="INSERT INTO series (nombre, anioserie ) VALUES ('".$nombre."', '".$anio."')";
+if(mysql_query($queinserie))
+{
+    
+    return(TRUE);
+}
+else{
 
+    return(FALSE);
+}
+}
+function insertatemp($numtemp, $idserie){
+  $quetemp="INSERT INTO `temporada` ( `anio`, `numtemp`, `Series_idSeries`) VALUES ('0000', '".$numtemp."', '".$idserie."')";
+  if(mysql_query($quetemp)){
+    return(TRUE);
+  }
+  else{
+    return(FALSE);
+  }
+}
 ?>

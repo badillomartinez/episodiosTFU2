@@ -9,7 +9,7 @@ $anio=$_POST["anioinicio"];
 //$queid="SELECT idSeries FROM series ORDER BY idSeries DESC";
 //$cursid=mysql_query($queid);
 //$ultimo=mysql_fetch_row($cursid)[0];
-$queinserie="INSERT INTO series (nombre, anioserie ) VALUES ('".$nombreserie."', '".$anio."')";
+/*$queinserie="INSERT INTO series (nombre, anioserie ) VALUES ('".$nombreserie."', '".$anio."')";
 if(mysql_query($queinserie))
 {
     
@@ -17,6 +17,12 @@ if(mysql_query($queinserie))
 }
 else{
 
+    echo("Error");
+}*/
+if(insertaserie($nombreserie,$anio)){
+    echo("Serie agregada con exito");
+}
+else{
     echo("Error");
 }
 echo("Será redirigido en 5 segundos");
