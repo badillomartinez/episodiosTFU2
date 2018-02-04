@@ -91,4 +91,44 @@ function insertatemp($numtemp, $idserie){
     return(FALSE);
   }
 }
+function idepisodiobynumepisodio($idtemp, $idserie, $numepi){
+  $quetemp="SELECT * FROM `episodios` WHERE Temporada_idTemporada=$idtemp AND Temporada_Series_idSeries=$idserie AND numeroepi=$numepi";
+  $mantemp=mysql_query($quetemp);
+  if(mysql_num_rows($mantemp)>0){
+    $lineas=mysql_fetch_row($mantemp);
+    return($lineas[0]);
+  }
+  return(0);
+}
+function insertaepisodio($syn, $numepi, $titue, $idtemp, $idserie){
+  $quetemp="INSERT INTO `episodios` (`sinopsis`, `numeroepi`, `tituloepi`, `Temporada_idTemporada`, `Temporada_Series_idSeries`) VALUES ('".$syn."', '".$numepi."', '".$titue."', '".$idtemp."', '".$idserie."')";
+  if(mysql_query($quetemp)){
+    return(TRUE);
+  }
+  else{return(FALSE);}
+   
+}
+function idlink($idepi, $idtemp, $idserie){
+  $quetemp=("SELECT * FROM `links` WHERE Episodios_idEpisodios = $idepi AND Episodios_Temporada_idTemporada = $idtemp AND Episodios_Temporada_Series_idSeries = $idserie  ");
+  $mantemp=mysql_query($quetemp);
+  if(mysql_num_rows($mantemp)>0){
+    $lineas=mysql_fetch_row($mantemp);
+    return($lineas[0]);
+  }
+  else{return(0);}
+}
+function insertalink($link, $etiqueta, $idepi, $idtemp, $idserie ){
+  $quelink="INSERT INTO `links` (`enlace`, `tipo`, `etiqueta`, `Episodios_idEpisodios`, `Episodios_Temporada_idTemporada`, `Episodios_Temporada_Series_idSeries`) VALUES ('".$link."', 3, '".$etiqueta."', '".$idepi."', '".$idtemp."', '".$idserie."')";
+  if(mysql_query($quelink)){
+    return(TRUE);
+  }
+  else{return(FALSE);}
+}
+function remplazalink($idlink, $link, $etiqueta, $idepi, $idtemp, $idserie){
+  $quelink="REPLACE INTO `links` (`idLinks`, `enlace`, `tipo`, `etiqueta`, `Episodios_idEpisodios`, `Episodios_Temporada_idTemporada`, `Episodios_Temporada_Series_idSeries`) VALUES ('".$link."', 3, '".$etiqueta."', '".$idepi."', '".$idtemp."', '".$idserie."')";
+  if(mysql_query($quelink)){
+    return(TRUE);
+  }
+  else{return(FALSE);}
+}
 ?>
